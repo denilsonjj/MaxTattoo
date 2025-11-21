@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Image, Settings, Menu, X, LogOut, User } from "lucide-react";
+import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
+import { Home, Image, Settings, Menu, X, LogOut } from "lucide-react";
 import { supabase } from "./supabaseClient";
 
-export default function Layout({ children }) {
+export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-   
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-   
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -31,7 +29,7 @@ export default function Layout({ children }) {
   const isPublicPage = location.pathname === "/" || location.pathname === "/login";
 
   if (isPublicPage) {
-    return <div className="min-h-screen bg-[#101010]">{children}</div>;
+    return <div className="min-h-screen bg-[#101010]"><Outlet /></div>;
   }
 
   return (
@@ -45,7 +43,7 @@ export default function Layout({ children }) {
           <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-500"><X size={24} /></button>
         </div>
         <nav className="p-4 space-y-2">
-          <p className="px-4 text-xs font-semibold !text-black-400 uppercase tracking-wider mb-2">Menu</p>
+          <p className="px-4 text-xs font-semibold uppercase tracking-wider mb-2">Menu</p>
           <Link to="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg"><Home size={20}/> Site Principal</Link>
           <Link to="/dashboard" className={`flex items-center gap-3 px-4 py-3 rounded-lg ${location.pathname === '/dashboard' ? 'bg-gray-100 text-[#E60000] font-medium' : 'text-gray-600 hover:bg-gray-50'}`}><Image size={20}/> Portfólio</Link>
           <Link to="/admin-settings" className={`flex items-center gap-3 px-4 py-3 rounded-lg ${location.pathname === '/admin-settings' ? 'bg-gray-100 text-[#E60000] font-medium' : 'text-gray-600 hover:bg-gray-50'}`}><Settings size={20}/> Configurações</Link>
@@ -58,14 +56,16 @@ export default function Layout({ children }) {
       </aside>
       
       <div className="flex-1 flex flex-col min-w-0 bg-[#101010]">
-       <header className="md:hidden bg-white px-4 py-3 flex items-center gap-4 border-b border-gray-200">
-  <button onClick={() => setIsSidebarOpen(true)}>
-    <Menu size={24} className="text-gray-900" />
-  </button>
-  <span className="font-bold text-gray-900">Painel</span>
-</header>
+        <header className="md:hidden bg-white px-4 py-3 flex items-center gap-4 border-b border-gray-200">
+          <button onClick={() => setIsSidebarOpen(true)}>
+            <Menu size={24} className="text-gray-900" />
+          </button>
+          <span className="font-bold text-gray-900">Painel</span>
+        </header>
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 md:p-8">
+          <Outlet />
+        </main>
       </div>
       {isSidebarOpen && <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setIsSidebarOpen(false)} />}
     </div>
