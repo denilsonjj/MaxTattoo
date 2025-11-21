@@ -1,0 +1,37 @@
+@import "tailwindcss";
+/* Configurações Globais */
+body {
+  background-color: #101010; /* Fundo Preto Absoluto */
+  color: #FAFAFA;            /* Texto Branco Suave */
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* Evita rolagem lateral indesejada no mobile */
+}
+
+/* Estilização da Barra de Rolagem (Scrollbar) para combinar com o site */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #101010;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E60000; /* Vermelho da marca ao passar o mouse */
+}
+
+/* Utilitário para animações suaves */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
