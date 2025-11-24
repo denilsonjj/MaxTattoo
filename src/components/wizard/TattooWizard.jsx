@@ -3,7 +3,7 @@ import { X, ChevronRight, ChevronLeft, Send, Loader2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Textarea } from '../ui/Textarea';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../../supabaseClient'; // <--- MUDANÇA IMPORTANTE
+import { supabase } from '../../supabaseClient'; 
 import { toast } from 'sonner';
 
 const BODY_LOCATIONS = [
@@ -24,8 +24,8 @@ const SIZES = [
 ];
 
 const STYLES = [
-  'Blackwork', 'Realismo', 'Fine Line', 'Old School',
-  'Tribal', 'Aquarela', 'Geométrico', 'Minimalista'
+  'Blackwork', 'Cyber Tribal', 'Dark', 'Old School',
+  'Tribal', 'Geek', 'Minimalista'
 ];
 
 export default function TattooWizard({ onClose }) {
