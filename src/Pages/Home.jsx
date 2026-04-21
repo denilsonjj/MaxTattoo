@@ -118,7 +118,7 @@ export default function Home() {
               <div>
                 <h3 className="text-2xl md:text-3xl font-black text-[#FAFAFA] mb-3">⚖️ Importante: Sinal Obrigatório</h3>
                 <p className="text-[#FAFAFA] mb-3 text-lg">
-                  Conforme regras do estúdio, exigimos um sinal de <span className="font-black text-[#E60000]">R$ 50,00</span> para agendar.
+                  Conforme regras do estúdio, exigimos um sinal de <span className="font-black text-[#E60000]">R$ 70,00</span> para agendar.
                 </p>
                 <div className="bg-black/40 p-4 rounded-xl border border-[#E60000]/20 inline-block">
                   <p className="text-[#FAFAFA]/90 text-sm font-medium">✓ Esse valor é descontado do preço final da sua tatuagem.</p>
