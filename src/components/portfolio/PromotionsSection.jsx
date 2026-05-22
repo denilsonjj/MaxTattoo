@@ -2,70 +2,51 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Tag, Zap } from 'lucide-react';
 
+const MotionArticle = motion.article;
+
 export default function PromotionsSection({ promotions }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {promotions.map((promo, index) => (
-        <motion.div
+        <MotionArticle
           key={promo.id}
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.1 }}
-          viewport={{ once: true }}
-          whileHover={{ scale: 1.05, y: -10 }}
-          className="group relative bg-gradient-to-br from-[#151515] to-[#101010] border-2 border-[#E60000]/30 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#E60000]/20 transition-all"
+          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ delay: index * 0.07, duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+          whileHover={{ y: -7 }}
+          className="promo-tile group"
         >
-          <div className="absolute top-4 right-4 z-10 bg-[#E60000] text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
-            <Zap className="w-3 h-3" />
-            PROMO
+          <div className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-lg border border-[#b72f36]/35 bg-[#18090a]/86 px-3 py-2 text-[0.65rem] font-black uppercase tracking-[0.18em] text-[#f4efe7] backdrop-blur-md">
+            <Zap className="h-3.5 w-3.5 text-[#b72f36]" />
+            Promo
           </div>
 
           {promo.image_url && (
-            <div className="relative h-48 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#101010] via-transparent to-transparent z-10" />
+            <div className="relative h-56 overflow-hidden">
               <img
                 src={promo.image_url}
                 alt={promo.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080807] via-transparent to-transparent" />
             </div>
           )}
 
-          <div className="p-6 space-y-3">
-            <div className="flex items-start gap-2">
-              <Tag className="w-5 h-5 text-[#E60000] mt-1 flex-shrink-0" />
-              <h3 className="text-[#FAFAFA] font-black text-xl leading-tight">
-                {promo.title}
-              </h3>
+          <div className="relative space-y-4 p-5 md:p-6">
+            <div className="flex items-start gap-3">
+              <Tag className="mt-1 h-5 w-5 shrink-0 text-[#b7a27a]" />
+              <h3 className="text-xl font-black leading-tight tracking-tight text-[#f4efe7]">{promo.title}</h3>
             </div>
 
-            {promo.description && (
-              <p className="text-[#FAFAFA]/60 text-sm leading-relaxed">
-                {promo.description}
-              </p>
-            )}
+            {promo.description && <p className="text-sm leading-6 text-[#d4ccc0]/62">{promo.description}</p>}
 
-            <div className="flex items-center gap-3 pt-2">
-              {promo.original_price && (
-                <span className="text-[#FAFAFA]/40 line-through text-lg">
-                  {promo.original_price}
-                </span>
-              )}
-              <span className="text-[#E60000] font-black text-2xl">
-                {promo.promo_price}
-              </span>
+            <div className="flex items-end gap-3 pt-2">
+              {promo.original_price && <span className="text-sm font-bold text-[#d4ccc0]/36 line-through">{promo.original_price}</span>}
+              <span className="text-3xl font-black text-[#b7a27a]">{promo.promo_price}</span>
             </div>
-
-            {promo.original_price && (
-              <div className="inline-block bg-[#E60000]/10 border border-[#E60000]/30 rounded-lg px-3 py-1 mt-2">
-                <span className="text-[#E60000] text-xs font-bold">
-                  🔥 Economia garantida!
-                </span>
-              </div>
-            )}
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#E60000]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-        </motion.div>
+        </MotionArticle>
       ))}
     </div>
   );

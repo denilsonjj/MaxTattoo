@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
-import { Home, Image, Settings, Menu, X, LogOut } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Home, Image, LogOut, Menu, Settings, X } from "lucide-react";
 import { supabase } from "./supabaseClient";
+
+const navItems = [
+  { to: "/", label: "Site principal", icon: Home },
+  { to: "/dashboard", label: "Dashboard", icon: Image },
+  { to: "/admin-settings", label: "Configurações", icon: Settings },
+];
 
 export default function Layout() {
   const location = useLocation();
@@ -23,51 +29,101 @@ export default function Layout() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/');
+    navigate("/");
   };
 
   const isPublicPage = location.pathname === "/" || location.pathname === "/login";
 
   if (isPublicPage) {
-    return <div className="min-h-screen bg-[#101010]"><Outlet /></div>;
+    return (
+      <div className="min-h-screen bg-[#080807]">
+        <Outlet />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen flex w-full bg-[#101010]">
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-300 md:translate-x-0 md:static ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-             <div className="w-8 h-8 bg-[#E60000] rounded-full flex items-center justify-center text-white font-bold">M</div>
-             <span className="font-bold text-gray-900">Max Admin</span>
+    <div className="min-h-screen w-full bg-[#080807] text-[#f4efe7]">
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-white/[0.08] bg-[#0c0c0a]/96 backdrop-blur-xl transition-transform duration-300 md:translate-x-0 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex h-20 items-center justify-between border-b border-white/[0.08] px-5">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#b72f36]/45 bg-[#b72f36]/12 text-sm font-black shadow-[0_0_24px_rgba(183,47,54,0.18)]">
+              M
+            </div>
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.2em]">Max Admin</p>
+              <p className="mt-1 text-xs text-[#d4ccc0]/44">Supabase CMS</p>
+            </div>
           </div>
-          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-500"><X size={24} /></button>
-        </div>
-        <nav className="p-4 space-y-2">
-          <p className="px-4 text-xs font-semibold uppercase tracking-wider mb-2">Menu</p>
-          <Link to="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg"><Home size={20}/> Site Principal</Link>
-          <Link to="/dashboard" className={`flex items-center gap-3 px-4 py-3 rounded-lg ${location.pathname === '/dashboard' ? 'bg-gray-100 text-[#E60000] font-medium' : 'text-gray-600 hover:bg-gray-50'}`}><Image size={20}/> Portfólio</Link>
-          <Link to="/admin-settings" className={`flex items-center gap-3 px-4 py-3 rounded-lg ${location.pathname === '/admin-settings' ? 'bg-gray-100 text-[#E60000] font-medium' : 'text-gray-600 hover:bg-gray-50'}`}><Settings size={20}/> Configurações</Link>
-          
-          <div className="pt-8 border-t border-gray-100 mt-4">
-             <div className="px-4 mb-4 text-sm text-gray-500 truncate">{user?.email}</div>
-             <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg"><LogOut size={20}/> Sair</button>
-          </div>
-        </nav>
-      </aside>
-      
-      <div className="flex-1 flex flex-col min-w-0 bg-[#101010]">
-        <header className="md:hidden bg-white px-4 py-3 flex items-center gap-4 border-b border-gray-200">
-          <button onClick={() => setIsSidebarOpen(true)}>
-            <Menu size={24} className="text-gray-900" />
+          <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-[#d4ccc0]/70">
+            <X size={24} />
           </button>
-          <span className="font-bold text-gray-900">Painel</span>
+        </div>
+
+        <nav className="flex-1 space-y-2 p-4">
+          <p className="px-3 pb-2 text-[0.68rem] font-black uppercase tracking-[0.28em] text-[#d4ccc0]/36">Menu</p>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.to;
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setIsSidebarOpen(false)}
+                className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-sm font-bold transition-all ${
+                  isActive
+                    ? "border-[#b72f36]/38 bg-[#b72f36]/12 text-[#f4efe7]"
+                    : "border-transparent text-[#d4ccc0]/60 hover:border-white/[0.08] hover:bg-white/[0.04] hover:text-[#f4efe7]"
+                }`}
+              >
+                <Icon size={19} />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-white/[0.08] p-4">
+          <div className="mb-3 rounded-lg border border-white/[0.08] bg-white/[0.035] p-3">
+            <p className="text-[0.68rem] font-black uppercase tracking-[0.22em] text-[#d4ccc0]/36">Conectado</p>
+            <p className="mt-2 truncate text-sm text-[#f4efe7]">{user?.email || "Sessão local"}</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg border border-[#b72f36]/24 bg-[#b72f36]/8 px-4 py-3 text-sm font-bold text-[#ffb8bd] transition-colors hover:bg-[#b72f36]/14"
+          >
+            <LogOut size={19} />
+            Sair
+          </button>
+        </div>
+      </aside>
+
+      <div className="min-h-screen md:pl-72">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-white/[0.08] bg-[#080807]/82 px-4 backdrop-blur-xl md:hidden">
+          <button onClick={() => setIsSidebarOpen(true)}>
+            <Menu size={24} className="text-[#f4efe7]" />
+          </button>
+          <span className="font-black uppercase tracking-[0.16em]">Painel</span>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8">
+        <main className="mx-auto w-full max-w-7xl p-4 md:p-8">
           <Outlet />
         </main>
       </div>
-      {isSidebarOpen && <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setIsSidebarOpen(false)} />}
+
+      {isSidebarOpen && (
+        <button
+          type="button"
+          aria-label="Fechar menu"
+          className="fixed inset-0 z-40 bg-black/60 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
     </div>
   );
 }

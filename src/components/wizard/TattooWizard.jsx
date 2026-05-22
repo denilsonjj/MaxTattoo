@@ -3,8 +3,9 @@ import { X, ChevronRight, ChevronLeft, Send, Loader2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Textarea } from '../ui/Textarea';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../../supabaseClient'; 
 import { toast } from 'sonner';
+
+const MotionDiv = motion.div;
 
 const BODY_LOCATIONS = [
   { id: 'braco', label: 'Braço' },
@@ -129,7 +130,7 @@ export default function TattooWizard({ onClose }) {
   };
 
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -383,6 +384,6 @@ export default function TattooWizard({ onClose }) {
           )}
         </div>
       </motion.div>
-    </motion.div>
+    </MotionDiv>
   );
 }

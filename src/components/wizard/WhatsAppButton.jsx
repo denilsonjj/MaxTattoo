@@ -3,7 +3,6 @@ import { MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { db } from '../../firebaseConfig';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { toast } from 'sonner'; // Biblioteca de toast recomendada
 
 export default function WhatsAppButton({ formData }) {
   const handleWhatsAppClick = async () => {

@@ -58,7 +58,7 @@ export default function PricingManager({ pricing, onUpdate }) {
       setEditingId(null);
       if(onUpdate) onUpdate();
     } catch (error) {
-      toast.error('Erro ao atualizar');
+      toast.error('Erro ao atualizar: ' + error.message);
     }
   };
 
@@ -70,7 +70,7 @@ export default function PricingManager({ pricing, onUpdate }) {
       toast.success('Removido!');
       if(onUpdate) onUpdate();
     } catch (error) {
-      toast.error('Erro ao remover');
+      toast.error('Erro ao remover: ' + error.message);
     }
   };
 

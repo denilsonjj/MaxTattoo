@@ -2,47 +2,42 @@ import React from 'react';
 import { DollarSign } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const MotionDiv = motion.div;
+
 export default function PricingSection({ pricing }) {
   if (!pricing || pricing.length === 0) {
     return (
-      <div className="text-center py-8 text-[#FAFAFA]/40">
-        Nenhum preço cadastrado ainda
+      <div className="quiet-panel py-12 text-center text-[#d4ccc0]/48">
+        Nenhum valor cadastrado ainda.
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {pricing.map((item, index) => (
-        <motion.div
+        <MotionDiv
           key={item.id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-          viewport={{ once: true }}
-          whileHover={{ scale: 1.02, y: -5 }}
-          className="group relative bg-gradient-to-br from-[#151515] to-[#101010] border-2 border-[#E60000]/20 rounded-2xl p-6 md:p-8 hover:border-[#E60000]/60 transition-all overflow-hidden"
+          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ delay: index * 0.06, duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+          whileHover={{ y: -6 }}
+          className="price-tile"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#E60000]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          
-          <div className="relative flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">{item.icon || '✨'}</span>
-                <h3 className="text-[#FAFAFA] font-black text-xl md:text-2xl">{item.title}</h3>
+          <div className="flex items-start justify-between gap-6">
+            <div>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.045] text-lg">
+                  {item.icon || <DollarSign className="h-5 w-5 text-[#b7a27a]" />}
+                </span>
+                <h3 className="text-xl font-black tracking-tight text-[#f4efe7] md:text-2xl">{item.title}</h3>
               </div>
-              {item.subtitle && (
-                <p className="text-[#FAFAFA]/60 text-sm mb-4">{item.subtitle}</p>
-              )}
-              <div className="flex items-baseline gap-2">
-                <p className="text-[#E60000] font-black text-2xl md:text-3xl">{item.price}</p>
-              </div>
+              {item.subtitle && <p className="max-w-lg text-sm leading-6 text-[#d4ccc0]/60">{item.subtitle}</p>}
             </div>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E60000]/20 to-[#FF4444]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <DollarSign className="w-7 h-7 text-[#E60000]" />
-            </div>
+            <p className="shrink-0 text-right text-2xl font-black text-[#b7a27a] md:text-3xl">{item.price}</p>
           </div>
-        </motion.div>
+        </MotionDiv>
       ))}
     </div>
   );

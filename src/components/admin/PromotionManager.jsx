@@ -50,7 +50,7 @@ export default function PromotionManager({ promotions = [], onUpdate }) {
       setIsAdding(false);
       setFormData({ title: '', description: '', original_price: '', promo_price: '', image_url: '', active: true });
       if (onUpdate) onUpdate();
-    } catch (e) { toast.error('Erro ao salvar'); }
+    } catch (e) { toast.error('Erro ao salvar: ' + e.message); }
   };
 
   const handleEdit = async (id) => {
@@ -60,7 +60,7 @@ export default function PromotionManager({ promotions = [], onUpdate }) {
       toast.success('Atualizado!');
       setEditingId(null);
       if (onUpdate) onUpdate();
-    } catch (e) { toast.error('Erro ao atualizar'); }
+    } catch (e) { toast.error('Erro ao atualizar: ' + e.message); }
   };
 
   const handleDelete = async (id) => {
