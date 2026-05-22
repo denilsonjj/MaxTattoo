@@ -165,7 +165,7 @@ export default function Home() {
       </header>
 
       <main id="topo" className="relative">
-        <section className="relative min-h-[92svh] overflow-hidden border-b border-white/[0.07] pt-16 md:pt-20">
+        <section className="hero-section relative min-h-[92svh] overflow-hidden border-b border-white/[0.07] pt-16 md:pt-20">
           <motion.div
             initial={{ scale: 1.08, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -177,7 +177,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,7,0.16)_0%,rgba(8,8,7,0.78)_82%,#080807_100%)]" />
           </motion.div>
 
-          <div className="relative z-10 mx-auto grid min-h-[calc(92svh-4rem)] max-w-7xl items-center gap-10 px-4 py-16 md:min-h-[calc(92svh-5rem)] md:grid-cols-[1.08fr_0.92fr] md:px-8">
+          <div className="hero-content relative z-10 mx-auto grid min-h-[calc(92svh-4rem)] max-w-7xl items-center gap-10 px-4 py-16 md:min-h-[calc(92svh-5rem)] md:grid-cols-[1.08fr_0.92fr] md:px-8">
             <motion.div variants={staggerGroup} initial="hidden" animate="visible" className="max-w-3xl">
               <motion.div variants={fadeUp} className="artist-hero-chip">
                 <div className="artist-hero-photo">
@@ -189,7 +189,7 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className="text-[clamp(3.65rem,10vw,9.5rem)] font-black uppercase leading-[0.84] tracking-tight text-[#f4efe7]">
+              <motion.h1 variants={fadeUp} className="hero-title text-[clamp(3.65rem,10vw,9.5rem)] font-black uppercase leading-[0.84] tracking-tight text-[#f4efe7]">
                 Arte na pele,
                 <span className="block text-outline">sem pressa.</span>
               </motion.h1>
