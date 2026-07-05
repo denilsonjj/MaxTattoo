@@ -247,7 +247,7 @@ export default function Home() {
                 <p className="text-xs font-bold uppercase tracking-[0.34em] text-[#d4ccc0]/45">Compromisso</p>
                 <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Segurança e agenda organizada</h2>
                 <p className="mt-5 max-w-xl leading-7 text-[#d4ccc0]/70">
-                  Para reservar uma sessão, o estúdio trabalha com sinal de <strong className="text-[#f4efe7]">R$ 70,00</strong>. O valor é descontado no final da tatuagem e ajuda a manter cada horário preparado com atenção.
+                  Para reservar uma sessão, o estúdio trabalha com sinal de <strong className="text-[#f4efe7]">R$ 100,00</strong>. O valor é descontado no final da tatuagem e ajuda a manter cada horário preparado com atenção.
                 </p>
               </motion.div>
 
